@@ -1,0 +1,116 @@
+{
+    "dns": {
+      "disable_cache": false,
+      "rules": [
+        {
+          "outbound": [
+            "WARP"
+          ],
+          "server": "warp-dns"
+        }
+      ],
+      "servers": [
+        {
+          "address": "tls://1.1.1.1",
+          "detour": "direct"
+        },
+        {
+          "address": "tls://1.1.1.1",
+          "strategy": "prefer_ipv6",
+          "tag": "warp-dns"
+        }
+      ]
+    },
+    "inbounds": [
+        {
+            "type": "trojan",
+            "listen": "::",
+            "listen_port": TR_PORT,
+            "users": [
+                {
+                    "password": "TR_PASSWD"
+                }
+            ],
+            "tls": {
+                "enabled": true,
+                "certificate_path": "/etc/sing-box/certs/YOUR_DOMAIN_NAME.crt",
+                "key_path": "/etc/sing-box/certs/YOUR_DOMAIN_NAME.key"
+            }
+        }
+    ],
+    "log": {
+      "level": "info"
+    },
+    "outbounds": [
+      {
+        "local_address": [
+          "198.18.0.1/32",
+          "2606:4700:110:88ed:108e:e437:558a:ce5d/128"
+        ],
+        "mtu": 1408,
+        "peer_public_key": "",
+        "private_key": "",
+        "reserved": [
+          0,
+          0,
+          0
+        ],
+        "server": "engage.cloudflareclient.com",
+        "server_port": 2408,
+        "system_interface": false,
+        "tag": "warp",
+        "type": "wireguard"
+      },
+      {
+        "tag": "direct",
+        "type": "direct"
+      },
+      {
+        "detour": "warp",
+        "domain_strategy": "prefer_ipv6",
+        "tag": "WARP",
+        "type": "direct"
+      },
+      {
+        "tag": "dns-out",
+        "type": "dns"
+      },
+      {
+        "tag": "block",
+        "type": "block"
+      }
+    ],
+    "route": {
+      "auto_detect_interface": true,
+      "final": "WARP",
+      "geoip": {
+        "download_detour": "warp"
+      },
+      "geosite": {
+        "download_detour": "warp"
+      },
+      "rules": [
+        {
+          "outbound": "dns-out",
+          "protocol": "dns"
+        },
+        {
+          "outbound": "block",
+          "port": [
+            443
+          ],
+          "protocol": "quic"
+        },
+        {
+          "domain_suffix": [
+            ""
+          ],
+          "geosite": [
+            ""
+          ],
+          "invert": false,
+          "outbound": "WARP"
+        }
+      ]
+    }
+  }
