@@ -19,6 +19,21 @@
             }
         },
         {
+            "type": "trojan",
+            "listen": "::",
+            "listen_port": TR_PORT,
+            "users": [
+                {
+                    "password": "TR_PASSWD"
+                }
+            ],
+            "tls": {
+                "enabled": true,
+                "certificate_path": "/etc/sing-box/certs/YOUR_DOMAIN_NAME.crt",
+                "key_path": "/etc/sing-box/certs/YOUR_DOMAIN_NAME.key"
+            }
+        },
+        {
             "type": "vmess",
             "listen": "127.0.0.1",
             "listen_port": 15001,
