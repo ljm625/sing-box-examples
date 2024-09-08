@@ -112,46 +112,6 @@
                 "outbound": "block"
             },
             {
-                "outbound": "socks-IPv4-out",
-                "domain": [
-                    "wddadacsadwa"
-                ],
-                "geosite": [
-                    "wddadacsadwa"
-                ]
-            },
-            {
-                "outbound": "socks-IPv6-out",
-                "domain": [
-                    "wddadacsadwa"
-
-                ],
-                "geosite": [
-                    "wddadacsadwa"
-                ]
-            },
-            {
-                "outbound": "vps-outbound-v4",
-                "domain": [
-                    "wddadacsadwa"
-                ],
-                "geosite": [
-                    "wddadacsadwa"
-
-                ]
-            },
-            {
-                "outbound": "vps-outbound-v6",
-                "domain": [
-                    "wddadacsadwa"
-
-                ],
-                "geosite": [
-                    "wddadacsadwa"
-
-                ]
-            },
-            {
                 "outbound": "direct",
                 "network": "udp,tcp"
             }

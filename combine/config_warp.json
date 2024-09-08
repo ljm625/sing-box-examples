@@ -100,16 +100,6 @@
             443
           ],
           "protocol": "quic"
-        },
-        {
-          "domain_suffix": [
-            ""
-          ],
-          "geosite": [
-            ""
-          ],
-          "invert": false,
-          "outbound": "WARP"
         }
       ]
     }
