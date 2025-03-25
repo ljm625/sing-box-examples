@@ -69,25 +69,6 @@
             "domain_strategy": "ipv6_only"
         },
         {
-            "type": "socks",
-            "tag": "socks-out",
-            "server": "127.0.0.1",
-            "server_port": 40000,
-            "version": "5"
-        },
-        {
-            "type": "direct",
-            "tag": "socks-IPv4-out",
-            "detour": "socks-out",
-            "domain_strategy": "ipv4_only"
-        },
-        {
-            "type": "direct",
-            "tag": "socks-IPv6-out",
-            "detour": "socks-out",
-            "domain_strategy": "ipv6_only"
-        },
-        {
             "type": "block",
             "tag": "block"
         }
