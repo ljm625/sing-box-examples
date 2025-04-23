@@ -4,7 +4,7 @@
       "rules": [
         {
           "outbound": [
-            "WARP"
+            "warp"
           ],
           "server": "warp-dns"
         }
@@ -59,16 +59,11 @@
         "server_port": 2408,
         "system_interface": false,
         "tag": "warp",
+        "domain_strategy": "prefer_ipv6",
         "type": "wireguard"
       },
       {
         "tag": "direct",
-        "type": "direct"
-      },
-      {
-        "detour": "warp",
-        "domain_strategy": "prefer_ipv6",
-        "tag": "WARP",
         "type": "direct"
       },
       {
