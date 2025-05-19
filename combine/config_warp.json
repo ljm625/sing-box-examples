@@ -76,7 +76,7 @@
     ],
     "route": {
       "auto_detect_interface": true,
-      "final": "WARP",
+      "final": "warp",
       "geoip": {
         "download_detour": "warp"
       },
