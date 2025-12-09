@@ -42,7 +42,7 @@
         "tag": "warp",
         "type": "wireguard"
       }
-    ]
+    ],
     "outbounds": [
       {
         "tag": "direct",
@@ -52,10 +52,6 @@
         "tag": "dns-out",
         "type": "dns"
       },
-      {
-        "tag": "block",
-        "type": "block"
-      }
     ],
     "route": {
       "auto_detect_interface": true,
@@ -66,7 +62,7 @@
           "protocol": "dns"
         },
         {
-          "outbound": "block",
+          "action": "reject",
           "port": [
             443
           ],
