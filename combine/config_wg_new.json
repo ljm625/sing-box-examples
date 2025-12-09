@@ -37,7 +37,10 @@
         {
           "address": "WG_SERVER",
           "port": WG_PORT,
-          "public_key": "WG_PUBLIC"
+          "public_key": "WG_PUBLIC",
+          "allowed_ips": [
+            "0.0.0.0/0"
+          ]
         }
       ],
       "private_key": "WG_PRIVATE",
