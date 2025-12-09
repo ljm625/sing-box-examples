@@ -1,0 +1,34 @@
+{
+    "inbounds": [
+        {
+            "type": "shadowsocks",
+            "listen": "::",
+            "listen_port": SS_PORT,
+            "method": "2022-blake3-aes-128-gcm",
+            "password":"SS_PASSWD"
+        }
+    ],
+    "outbounds": [
+        {
+            "type": "direct",
+            "tag": "direct"
+        }    
+    ],
+    "route": {
+        "rules": [
+            {
+                "protocol": [
+                    "quic"
+                ],
+                "port": [
+                    443
+                ],
+                "action": "reject"
+            },
+            {
+                "outbound": "direct",
+                "network": "udp,tcp"
+            }
+        ]
+    }        
+}
