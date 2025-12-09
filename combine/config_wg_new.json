@@ -51,7 +51,7 @@
       {
         "tag": "dns-out",
         "type": "dns"
-      },
+      }
     ],
     "route": {
       "auto_detect_interface": true,
