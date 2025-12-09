@@ -1,65 +1,67 @@
 {
-    "dns": {
-      "disable_cache": false,
-      "servers": [
-        {
-          "address": "tls://1.1.1.1",
-          "detour": "direct"
-        }
-      ]
-    },
-    "inbounds": [
-        {
-            "type": "trojan",
-            "listen": "::",
-            "listen_port": TR_PORT,
-            "users": [
-                {
-                    "password": "TR_PASSWD"
-                }
-            ],
-            "tls": {
-                "enabled": true,
-                "certificate_path": "/etc/sing-box/certs/YOUR_DOMAIN_NAME.crt",
-                "key_path": "/etc/sing-box/certs/YOUR_DOMAIN_NAME.key"
-            }
-        }
-    ],
-    "log": {
-      "level": "info"
-    },
-    "endpoints":[
+  "dns": {
+    "disable_cache": false,
+    "servers": [
       {
-        "address": [
-          "WG_ADDR"
-        ],
-        "peers":{
-            "address": "WG_SERVER",
-            "port": WG_PORT,
-            "public_key": "WG_PUBLIC"
-        },
-        "private_key": "WG_PRIVATE",
-        "tag": "warp",
-        "type": "wireguard"
+        "address": "tls://1.1.1.1",
+        "detour": "direct"
       }
-    ],
-    "outbounds": [
-      {
-        "tag": "direct",
-        "type": "direct"
-      }
-    ],
-    "route": {
-      "auto_detect_interface": true,
-      "final": "warp",
-      "rules": [
+    ]
+  },
+  "inbounds": [
+    {
+      "type": "trojan",
+      "listen": "::",
+      "listen_port": TR_PORT,
+      "users": [
         {
-          "action": "reject",
-          "port": [
-            443
-          ],
-          "protocol": "quic"
+          "password": "TR_PASSWD"
         }
-      ]
+      ],
+      "tls": {
+        "enabled": true,
+        "certificate_path": "/etc/sing-box/certs/YOUR_DOMAIN_NAME.crt",
+        "key_path": "/etc/sing-box/certs/YOUR_DOMAIN_NAME.key"
+      }
     }
+  ],
+  "log": {
+    "level": "info"
+  },
+  "endpoints": [
+    {
+      "address": [
+        "WG_ADDR"
+      ],
+      "peers": [
+        {
+          "address": "WG_SERVER",
+          "port": WG_PORT,
+          "public_key": "WG_PUBLIC"
+        }
+      ],
+      "private_key": "WG_PRIVATE",
+      "tag": "warp",
+      "type": "wireguard"
+    }
+  ],
+  "outbounds": [
+    {
+      "tag": "direct",
+      "type": "direct"
+    }
+  ],
+  "route": {
+    "auto_detect_interface": true,
+    "final": "warp",
+    "rules": [
+      {
+        "action": "reject",
+        "port": [
+          443
+        ],
+        "protocol": "quic"
+      }
+    ]
   }
+}
