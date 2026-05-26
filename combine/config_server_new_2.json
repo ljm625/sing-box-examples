@@ -16,7 +16,7 @@
                 {
                     "name": "louis",
                     "uuid": "WS_UUID",
-                    "password": "YOUR_AUTH_STRING"
+                    "password": "WS_PATH"
                 }
             ],
             "congestion_control": "bbr",
