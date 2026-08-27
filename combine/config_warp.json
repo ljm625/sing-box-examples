@@ -1,100 +1,100 @@
 {
-    "dns": {
-      "disable_cache": false,
-      "rules": [
-        {
-          "outbound": [
-            "WARP"
-          ],
-          "server": "warp-dns"
-        }
-      ],
-      "servers": [
-        {
-          "address": "tls://1.1.1.1",
-          "detour": "direct"
-        },
-        {
-          "address": "tls://1.1.1.1",
-          "strategy": "prefer_ipv6",
-          "tag": "warp-dns"
-        }
-      ]
-    },
-    "inbounds": [
-        {
-            "type": "trojan",
-            "listen": "::",
-            "listen_port": TR_PORT,
-            "users": [
-                {
-                    "password": "TR_PASSWD"
-                }
-            ],
-            "tls": {
-                "enabled": true,
-                "certificate_path": "/etc/sing-box/certs/YOUR_DOMAIN_NAME.crt",
-                "key_path": "/etc/sing-box/certs/YOUR_DOMAIN_NAME.key"
-            }
-        }
-    ],
-    "log": {
-      "level": "info"
-    },
-    "outbounds": [
+  "log": {
+    "level": "info",
+    "timestamp": true
+  },
+  "dns": {
+    "servers": [
       {
-        "local_address": [
-          "198.18.0.1/32",
-          "2606:4700:110:88ed:108e:e437:558a:ce5d/128"
-        ],
-        "mtu": 1408,
-        "peer_public_key": "",
-        "private_key": "",
-        "reserved": [
-          0,
-          0,
-          0
-        ],
-        "server": "engage.cloudflareclient.com",
-        "server_port": 2408,
-        "system_interface": false,
-        "tag": "warp",
-        "type": "wireguard"
+        "type": "tls",
+        "tag": "direct-dns",
+        "server": "1.1.1.1",
+        "server_port": 853,
+        "detour": "direct"
       },
       {
-        "tag": "direct",
-        "type": "direct"
-      },
-      {
-        "tag": "dns-out",
-        "type": "dns"
-      },
-      {
-        "tag": "block",
-        "type": "block"
+        "type": "tls",
+        "tag": "warp-dns",
+        "server": "1.1.1.1",
+        "server_port": 853,
+        "detour": "warp"
       }
     ],
-    "route": {
-      "auto_detect_interface": true,
-      "final": "warp",
-      "geoip": {
-        "download_detour": "warp"
-      },
-      "geosite": {
-        "download_detour": "warp"
-      },
-      "rules": [
+    "final": "warp-dns",
+    "disable_cache": false
+  },
+  "inbounds": [
+    {
+      "type": "trojan",
+      "tag": "trojan-in",
+      "listen": "::",
+      "listen_port": __TROJAN_PORT__,
+      "users": [
         {
-          "outbound": "dns-out",
-          "protocol": "dns"
-        },
+          "name": "default",
+          "password": "__TROJAN_PASSWORD__"
+        }
+      ],
+      "tls": {
+        "enabled": true,
+        "certificate_path": "/etc/sing-box/certs/__DOMAIN__.crt",
+        "key_path": "/etc/sing-box/certs/__DOMAIN__.key"
+      }
+    }
+  ],
+  "endpoints": [
+    {
+      "type": "wireguard",
+      "tag": "warp",
+      "system": false,
+      "mtu": __WARP_MTU__,
+      "address": [
+        "__WARP_IPV4__",
+        "__WARP_IPV6__"
+      ],
+      "private_key": "__WARP_PRIVATE_KEY__",
+      "domain_resolver": "direct-dns",
+      "peers": [
         {
-          "outbound": "block",
-          "port": [
-            443
+          "address": "__WARP_SERVER__",
+          "port": __WARP_SERVER_PORT__,
+          "public_key": "__WARP_PEER_PUBLIC_KEY__",
+          "allowed_ips": [
+            "0.0.0.0/0",
+            "::/0"
           ],
-          "protocol": "quic"
+          "persistent_keepalive_interval": 30,
+          "reserved": [
+            __WARP_RESERVED_1__,
+            __WARP_RESERVED_2__,
+            __WARP_RESERVED_3__
+          ]
         }
       ]
     }
+  ],
+  "outbounds": [
+    {
+      "type": "direct",
+      "tag": "direct"
+    }
+  ],
+  "route": {
+    "auto_detect_interface": true,
+    "rules": [
+      {
+        "action": "sniff"
+      },
+      {
+        "protocol": "dns",
+        "action": "hijack-dns"
+      },
+      {
+        "protocol": "quic",
+        "port": 443,
+        "action": "reject"
+      }
+    ],
+    "final": "warp"
   }
+}
