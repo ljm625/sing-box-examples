@@ -9,8 +9,7 @@
         "type": "tls",
         "tag": "direct-dns",
         "server": "1.1.1.1",
-        "server_port": 853,
-        "detour": "direct"
+        "server_port": 853
       },
       {
         "type": "tls",
@@ -80,6 +79,7 @@
     }
   ],
   "route": {
+    "default_domain_resolver": "warp-dns",
     "auto_detect_interface": true,
     "rules": [
       {
